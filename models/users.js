@@ -1,8 +1,8 @@
-const Mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const Hash = require('password-hash')
-const Schema = Mongoose.Schema
+const Schema = mongoose.Schema
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -18,7 +18,7 @@ const UserSchema = new Schema({
 // ... add any other properties you want to save with users ...
 })
 
-UserSchema.statics.authenticate = function (email, password, callback) {
+userSchema.statics.authenticate = function (email, password, callback) {
   this.findOne({ email: email
   }, function (error, user) {
     if (user && Hash.verify(password, user.password)) {
@@ -37,5 +37,10 @@ UserSchema.statics.authenticate = function (email, password, callback) {
 const User = mongoose.model('User', userSchema)
 
 module.exports = {
-    User: User
+  User: User
 }
+
+// import mongoose from 'mongoose';
+// import user from './schemas/user';
+//
+// export const User = mongoose.models.User || mongoose.model('User', user);
