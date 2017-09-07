@@ -8,14 +8,14 @@
   </head>
   <body>
     <div>
-      <form action="/new_snippet/" method="POST" class="form">
+      <form action="/new_snippet/" method="POST" class="form" id="form_new_snippet">
         <p>
           <label for="title">Title:</label>
           <input name="title" type="text" id="title" required unique: true/>
         </p>
         <p>
           <label for="language">Language:</label>
-          <select name="language" type="text" id="language" name="language" required>
+          <select name="language" type="text" id="language" name="language" form="form_new_snippet" required>
             <option value="JavaScript">JavaScript</option>
             <option value="Java">Java</option>
             <option value="Python">Python</option>

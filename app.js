@@ -38,8 +38,6 @@ app.use(function errorHandler (err, req, res, next) {
 })
 // Taken from the express documentation: http://expressjs.com/en/guide/error-handling.html
 
-
-
 let authStrategy = new PassportLocalStrategy(
   {
     usernameField: 'email',
@@ -182,18 +180,28 @@ app.get('/:id/edit', function (req, res) {
 
 app.post('/:id/edit', function (req, res) {
   const snippet = req.body
-  console.log(snippet);
+  console.log(snippet)
+    console.log("^^snippet 1st time within app.post")
     snippet.title = req.body.title
     snippet.language = req.body.language
+    // document.getElementsById('language-menu').selectedValue
     snippet.body = req.body.body
     snippet.notes = req.body.notes
     snippet.tags = [req.body.tags]
     snippet.user = req.body.user
 
   console.log(snippet)
+  console.log("^^snippet 2nd time")
+
   Snippet.updateOne({_id: req.params.id}, snippet, {})
   .then(function () {
     res.redirect(`/${req.params.id}`)
+  })
+})
+
+app.post('/:id/delete', function (req, res) {
+  Snippet.findOneAndRemove({_id: req.params.id}).then(function (book) {
+    res.redirect('/')
   })
 })
 

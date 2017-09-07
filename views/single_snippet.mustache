@@ -13,15 +13,19 @@
       <h3>{{language}}</h3>
       <pre>{{body}}</pre>
       <h4>{{notes}}</h4>
-      <h4>{{tags}}</h4>
+      {{#tags}}
+      <h4>{{.}}</h4>
+      {{/tags}}
     </div>
-    <div>
+    <div class="links">
       <a href='/{{_id}}/edit/'>Edit this snippet</a>
-    </br>
       <a href="/new_snippet/">Add a new snippet</a>
-    </br>
       <a href='/'>Home Page</a>
     </div>
+  </br>
+    <form action="/{{_id}}/delete" method="POST">
+    <button type="submit">Delete this record</button>
+    </form>
     {{/snippet}}
     <script src="https://cdn.shoelace.style/1.0.0-beta22/shoelace.js"></script>
   </body>

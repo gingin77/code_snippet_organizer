@@ -28,10 +28,12 @@
           <textarea cols="50" rows="10" name="body" form="edit_form">{{body}}</textarea>
         </p>
         <p>
-          <textarea cols="50" rows="10"  form="edit_form">{{notes}}</textarea>
+          <label for="notes">Notes:</label>
+          <textarea cols="50" rows="10"  name="notes" form="edit_form">{{notes}}</textarea>
         </p>
         <p>
-          <input type="text" name="tags" value={{tags}} />
+          <label for="tags">Tags:</label>
+          <input type="text" name="tags" value="{{tags}}" />
         </p>
         <p>
           <button type="submit">Update this snippet</button>

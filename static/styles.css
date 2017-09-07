@@ -14,3 +14,10 @@ p{
 .italics{
   font-style: italic;
 }
+
+.links{
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

@@ -41,4 +41,6 @@ function deleteLanguageMenu() {
   LanguageMenu.remove()
 }
 
+
+
 // <textarea cols="50" rows="10" name="body" placeholder="Add a code snippet here" required value={{body}}></textarea>
