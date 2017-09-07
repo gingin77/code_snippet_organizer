@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>Home</title>
   <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta22/shoelace.css">
   <link rel="stylesheet" type="text/css" href="/static/styles.css" />
 </head>
-
 <body>
   <h1>Welcome to the Code Snippet Library!</h1>
   <p>
@@ -18,12 +16,18 @@
   <div>
     {{#snippet}}
       <div class="snippet_highlights">
-        <h2><a href="/{{_id}}">{{title}}</a></h2>
-        <h3>{{language}}</h3>
+        <h5><a href="/{{_id}}">{{title}}</a></h5>
+        <h6>{{language}}</h6>
         {{#tags}}
-        <h3><a href="/{{.}}">{{.}}</a> </h3>
+        <h6><a href="/{{.}}">{{.}}</a> </h6>
         {{/tags}}
-        </br>
+        <!-- </br> -->
+        <form action='/{{_id}}/edit/' method="GET">
+          <button class="button-xs button-light">Edit this snippet</button>
+        </form>
+        <form action="/{{_id}}/delete" method="POST">
+          <button id="delete" type="submit" class="button-warning button-xs">Delete this record</button>
+        </form>
         </br>
       </div>
     {{/snippet}}

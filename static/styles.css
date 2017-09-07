@@ -16,8 +16,13 @@ p{
 }
 
 .links{
-  width: 60%;
+  /*width: 60%;*/
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
+
+/*#delete{
+  background-color: red;
+  border: red;
+}*/
