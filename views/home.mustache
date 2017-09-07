@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Home</title>
@@ -11,20 +12,21 @@
   <h1>Welcome to the Code Snippet Library!</h1>
   <p>
     <a href="/new_snippet/">Add a new snippet</a>
+    </br>
     <a href="/edit_profile/">Edit your user profile</a>
   </p>
   <div>
-      <div>
-        {{#snippet}}
-        <h2><a href="/{{_id}}">{{title}}</h2>
+    {{#snippet}}
+      <div class="snippet_highlights">
+        <h2><a href="/{{_id}}">{{title}}</a></h2>
         <h3>{{language}}</h3>
         <h3>{{tags}}</h3>
+        </br>
+        </br>
       </div>
-        </br>
-        </br>
     {{/snippet}}
   </div>
-
   <script src="https://cdn.shoelace.style/1.0.0-beta22/shoelace.js"></script>
 </body>
+
 </html>

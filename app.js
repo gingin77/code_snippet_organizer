@@ -25,7 +25,17 @@ app.set('view engine', 'mustache')
 
 app.use('/static', express.static('static'))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(expressValidator())
+app.use(function errorHandler (err, req, res, next) {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(500)
+  res.render('error', { error: err })
+})
+
+
 
 let authStrategy = new PassportLocalStrategy(
   {
@@ -69,7 +79,7 @@ app.get('/login', function (req, res, next) {
 })
 
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/home',
+  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }))
@@ -112,7 +122,7 @@ app.post('/register/', function (req, res) {
                 }
               })
             }
-            return res.redirect('/home')
+            return res.redirect('/')
           })
         })
 })
@@ -131,27 +141,33 @@ app.get('/new_snippet/', function (req, res){
 app.post('/new_snippet/', function (req, res){
   Snippet.create(req.body)
   .then(function (snippet) {
-    res.redirect('/home')
+    res.redirect('/')
   })
   .catch(function (error) {
     let errorMsg
     console.log(error.code)
+    console.log("^^error.code w/in the app.post for new snippet");
     if (error.code === duplicateError) {
       errorMsg = `"${req.body.title}" has already been entered.`
     } else {
       errorMsg = 'You have encountered an unknown error.'
     }
-    res.render('index', {errorMsg: errorMsg})
-    console.log(Snippet);
   })
 })
 
 app.get('/:id', function (req, res) {
-  console.log(req.params.id)
-  Snippet.findOne({_id: req.params.id}).then(function (snippet) {
+  // console.log(req.params.id)
+  Snippet.findOne({_id: req.params.id})
+  .then(function (snippet) {
     res.render('single_snippet', {snippet: snippet})
   })
 })
+//
+// Person.findOne({ 'name.last': 'Ghost' }, 'name occupation', function (err, person) {
+//   if (err) return handleError(err);
+//   console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation) // Space Ghost is a talk show host.
+// })
+//
 
 app.get('/', function (req, res) {
   Snippet.find().then(function (snippet) {
