@@ -20,7 +20,9 @@
       <div class="snippet_highlights">
         <h2><a href="/{{_id}}">{{title}}</a></h2>
         <h3>{{language}}</h3>
-        <h3>{{tags}}</h3>
+        {{#tags}}
+        <h3>{{.}} </h3>
+        {{/tags}}
         </br>
         </br>
       </div>

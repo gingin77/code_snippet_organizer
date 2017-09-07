@@ -139,22 +139,40 @@ app.get('/new_snippet/', function (req, res){
   res.render('new_snippet')
 })
 
+
+
 app.post('/new_snippet/', function (req, res){
-  Snippet.create(req.body)
-  .then(function (snippet) {
+  req.body.tags = req.body.tags.replace(/\s/g, '').split(",")
+  .map(function(tag){
+    return tag
+  })
+  var snippet = new Snippet()
+  
+  snippet.title = req.body.title
+  snippet.language = req.body.language
+  snippet.body = req.body.body
+  snippet.notes = req.body.notes
+  snippet.tags = req.body.tags
+  console.log(req.body.tags)
+  console.log("^^ new log");
+  snippet.user = req.body.user
+  console.log(snippet)
+
+  snippet.save(function(err){
     res.redirect('/')
-    console.log(snippet);
   })
-  .catch(function (error) {
-    let errorMsg
-    console.log(error.code)
-    console.log("^^error.code w/in the app.post for new snippet");
-    if (error.code === duplicateError) {
-      errorMsg = `"${req.body.title}" has already been entered.`
-    } else {
-      errorMsg = 'You have encountered an unknown error.'
-    }
-  })
+
+
+  // .catch(function (error) {
+  //   let errorMsg
+  //   console.log(error.code)
+  //   console.log("^^error.code w/in the app.post for new snippet");
+  //   if (error.code === duplicateError) {
+  //     errorMsg = `"${req.body.title}" has already been entered.`
+  //   } else {
+  //     errorMsg = 'You have encountered an unknown error.'
+  //   }
+  // })
 })
 
 app.get('/:id', function (req, res) {

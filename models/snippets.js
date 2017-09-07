@@ -1,5 +1,18 @@
 const mongoose = require('mongoose')
 
+// var ToySchema = new Schema({ name: String });
+// var ToyBox = new Schema({
+//     toys: [ToySchema]
+//   , buffers: [Buffer]
+//   , string:  [String]
+//   , numbers: [Number]
+//   ... etc
+// });
+
+// const tagSchema = new mongoose.Schema({
+//     type: String
+// })
+
 const snippetSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -18,11 +31,10 @@ const snippetSchema = new mongoose.Schema({
   notes: {
     type: String
   },
-  tags: {
-    type: [String]
-  },
+  tags:
+    [String],
   user: {
-    type: [String]
+    type: String
   }
 })
 

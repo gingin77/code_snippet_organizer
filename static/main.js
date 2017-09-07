@@ -30,7 +30,7 @@ function renderLanguageMenu() {
   for (let i = 0; i < languages.length; i++) {
     let LanguageOption = document.createElement ('option')
     LanguageOption.textContent = languages[i]
-    LanguageOption.setAttribute('value', 'languages[i]')
+    LanguageOption.setAttribute('value', languages[i])
     LanguageMenu.appendChild(LanguageOption)
   }
   yesSelected.insertAdjacentElement('afterend', LanguageMenu)
