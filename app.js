@@ -181,16 +181,17 @@ app.get('/:id/edit', function (req, res) {
 })
 
 app.post('/:id/edit', function (req, res) {
-  const updatedSnippet = {
-    title: req.body.title,
-    language: req.body.language,
-    body: req.body.body,
-    notes: req.body.notes,
-    tags: [req.body.tags],
-    user: req.body.user
-  }
-  console.log(updatedSnippet)
-  Snippet.updateOne({_id: req.params.id}, updatedSnippet, {})
+  const snippet = req.body
+  console.log(snippet);
+    snippet.title = req.body.title
+    snippet.language = req.body.language
+    snippet.body = req.body.body
+    snippet.notes = req.body.notes
+    snippet.tags = [req.body.tags]
+    snippet.user = req.body.user
+
+  console.log(snippet)
+  Snippet.updateOne({_id: req.params.id}, snippet, {})
   .then(function () {
     res.redirect(`/${req.params.id}`)
   })

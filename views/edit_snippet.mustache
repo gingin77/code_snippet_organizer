@@ -10,7 +10,7 @@
     <div>
       <h1>Edit your snippet</h1>
       {{#snippet}}
-      <form action="/{{_id}}/edit/" method="POST" class="form">
+      <form action="/{{_id}}/edit/" method="POST" class="form" id="edit_form">
         <p>
           <label for="title">Title:</label>
           <input name="title" type="text" id="title" value="{{title}}" required unique: true/>
@@ -19,16 +19,16 @@
           <label for="language">Language:</label> You chose {{language}}. Do you need to reset the language?
           <p>
             <label for="reset">Yes</label>
-            <input type="radio" name="reset" id="reset_yes" <br>
+            <input type="radio" name="reset" id="reset_yes"/>
             <label for="no_reset">  No</label>
-            <input type="radio" name="reset" id="reset_no">
+            <input type="radio" name="reset" id="reset_no"/>
             <br>
         </p>
         <p>
-          <textarea cols="50" rows="10" name="body"></textarea>
+          <textarea cols="50" rows="10" name="body" form="edit_form">{{body}}</textarea>
         </p>
         <p>
-          <textarea cols="50" rows="10" value={{notes}}></textarea>
+          <textarea cols="50" rows="10"  form="edit_form">{{notes}}</textarea>
         </p>
         <p>
           <input type="text" name="tags" value={{tags}} />
