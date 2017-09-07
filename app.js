@@ -12,6 +12,8 @@ const flash = require('express-flash-messages')
 const models = require("./models/users")
 const User = models.User
 const duplicateError = 11000
+// const duplicateError
+// E11000
 
 mongoose.Promise = require('bluebird')
 mongoose.connect('mongodb://localhost:27017/snippets')
@@ -34,6 +36,7 @@ app.use(function errorHandler (err, req, res, next) {
   res.status(500)
   res.render('error', { error: err })
 })
+// Taken from the express documentation: http://expressjs.com/en/guide/error-handling.html
 
 
 
@@ -162,12 +165,36 @@ app.get('/:id', function (req, res) {
     res.render('single_snippet', {snippet: snippet})
   })
 })
-//
+// FUntion below is taken from the mongoose docs
 // Person.findOne({ 'name.last': 'Ghost' }, 'name occupation', function (err, person) {
 //   if (err) return handleError(err);
 //   console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation) // Space Ghost is a talk show host.
 // })
 //
+app.get('/:id/edit', function (req, res) {
+  Snippet.findOne({_id: req.params.id})
+    .then(function (snippet) {
+      console.log(snippet);
+      res.render('edit_snippet', {snippet: snippet})
+    })
+})
+
+app.post('/:id/edit', function (req, res) {
+  // let rb = req.body
+  const updatedSnippet = {
+    title: req.body.title,
+    language: req.body.language,
+    body: req.body.body,
+    notes: req.body.notes,
+    tags: [req.body.tags],
+    user: req.body.user
+  }
+  console.log(updatedSnippet)
+  // Snippet.updateOne({_id: req.params.id}, updatedSnippet, {})
+  // .then(function () {
+  //   res.redirect(`/${req.params.id}`)
+  // })
+})
 
 app.get('/', function (req, res) {
   Snippet.find().then(function (snippet) {

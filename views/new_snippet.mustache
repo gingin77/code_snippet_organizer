@@ -11,7 +11,7 @@
       <form action="/new_snippet/" method="POST" class="form">
         <p>
           <label for="title">Title:</label>
-          <input name="title" type="text" id="title" name="title" required unique: true/>
+          <input name="title" type="text" id="title" required unique: true/>
         </p>
         <p>
           <label for="language">Language:</label>
@@ -26,11 +26,14 @@
           </select>
         </p>
         <p>
-          notes: String
-
-          tags:[String]
-        </p>
           <textarea cols="50" rows="10" name="body" placeholder="Add a code snippet here" required></textarea>
+        </p>
+        <p>
+          <textarea cols="50" rows="10" name="notes" placeholder="Comments?? References??"></textarea>
+        </p>
+        <p>
+          <input type="text" name="tags" placeholder="Example: DOM_manipulation, animation_effects, routing, MCV, etc" />
+        </p>
         <p>
           <button type="submit">Save this snippet</button>
         </p>
