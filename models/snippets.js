@@ -20,9 +20,11 @@ const snippetSchema = new mongoose.Schema({
   },
   tags: {
     type: [String]
+  },
+  user: {
+    type: [String]
   }
 })
 
 const Snippet = mongoose.model('Snippet', snippetSchema)
-
 module.exports = Snippet

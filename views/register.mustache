@@ -3,12 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>Registration</title>
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta22/shoelace.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
   </head>
   <body>
     <div class="registration">
-      <form action='/login/' method="POST">
-        <label name='user_id'>User ID</label>
-        <input name='user_id' type='text' />
+      <form action='/register/' method="POST">
+        <!-- <label name='user_id'>User ID</label>
+        <input name='user_id' type='text' /> -->
         <label name='email'>Email</label>
         <input name='email' type='email' />
         <label name='password'>Password</label>
@@ -16,6 +18,5 @@
         <button type='submit' name='button'>Submit</button>
       </form>
     </div>
-
   </body>
 </html>

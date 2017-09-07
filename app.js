@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const mustacheExpress = require('mustache-express')
-const session = require('express-sessions')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const passport = require('passport')
@@ -11,19 +11,19 @@ const mongoose = require('mongoose')
 const flash = require('express-flash-messages')
 const models = require("./models/users")
 const User = models.User
+const duplicateError = 11000
 
 mongoose.Promise = require('bluebird')
 mongoose.connect('mongodb://localhost:27017/snippets')
 
-// const models = require('./models')
-// const User = mongoose.model('user')
 const Snippet = require('./models/snippets')
 
 const app = express()
 app.engine('mustache', mustacheExpress())
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'mustache')
-app.use('/public', express.static(path.join(__dirname, 'public')))
+
+app.use('/static', express.static('static'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(expressValidator())
 
@@ -49,25 +49,15 @@ const authDeserializer = function (id, done) {
 }
 
 app.use(session({
-  resave: false,
   secret: 'keyboard pitbull',
-  saveUninitialized: false,
-  store: new (require('express-sessions'))({
-    storage: 'mongodb',
-    instance: mongoose, // optional
-    host: 'localhost', // optional
-    port: 27017, // optional
-    db: 'test' // optional
-    // collection: 'sessions', // optional
-    // expire: 86400 // optional
-  })
+  resave: false,
+  saveUninitialized: false
 }))
 
 passport.use(authStrategy)
 passport.serializeUser(authSerializer)
 passport.deserializeUser(authDeserializer)
 
-// ... continue with Express.js app initialization ...
 app.use(require('connect-flash')())
 app.use(passport.initialize())
 
@@ -75,9 +65,6 @@ app.get('/login', function (req, res, next) {
   let errors = req.flash('error')
   req.flash('success', 'You can add messages by including a second parameter with the function.')
   res.render('login'
-  // , {
-  //   messages: res.locals.getMessages()
-  // }
   )
 })
 
@@ -91,10 +78,10 @@ app.get('/register/', function (req, res) {
   res.render('register')
 })
 
-app.post('/register/', function(req, res) {
-    req.checkBody('email', 'Email must be an email address').isEmail()
-    req.checkBody('email', 'Username is required').notEmpty();
-    req.checkBody('password', 'Password is required').notEmpty();
+app.post('/register/', function (req, res) {
+  req.checkBody('email', 'Email must be an email address').isEmail()
+  req.checkBody('email', 'Username is required').notEmpty()
+  req.checkBody('password', 'Password is required').notEmpty()
 
   req.getValidationResult()
         .then(function (result) {
@@ -114,8 +101,8 @@ app.post('/register/', function(req, res) {
           if (error) {
             return res.render('register', {
               errors: normalizeMongooseErrors(error.errors)
-                })
-            }
+            })
+          }
 
           user.save(function (err) {
             if (err) {
@@ -125,7 +112,7 @@ app.post('/register/', function(req, res) {
                 }
               })
             }
-            return res.redirect('/')
+            return res.redirect('/home')
           })
         })
 })
@@ -137,10 +124,41 @@ function normalizeMongooseErrors (errors) {
   })
 }
 
-app.get('/home', function(req, res) {
-    res.render('home');
+app.get('/new_snippet/', function (req, res){
+  res.render('new_snippet')
 })
 
-app.listen(3000, function() {
-    console.log('Your app is running http://localhost:3000/.')
+app.post('/new_snippet/', function (req, res){
+  Snippet.create(req.body)
+  .then(function (snippet) {
+    res.redirect('/home')
+  })
+  .catch(function (error) {
+    let errorMsg
+    console.log(error.code)
+    if (error.code === duplicateError) {
+      errorMsg = `"${req.body.title}" has already been entered.`
+    } else {
+      errorMsg = 'You have encountered an unknown error.'
+    }
+    res.render('index', {errorMsg: errorMsg})
+    console.log(Snippet);
+  })
+})
+
+app.get('/:id', function (req, res) {
+  console.log(req.params.id)
+  Snippet.findOne({_id: req.params.id}).then(function (snippet) {
+    res.render('single_snippet', {snippet: snippet})
+  })
+})
+
+app.get('/', function (req, res) {
+  Snippet.find().then(function (snippet) {
+    res.render('home', {snippet: snippet})
+  })
+})
+
+app.listen(3000, function () {
+  console.log('Your app is running http://localhost:3000/.')
 })
