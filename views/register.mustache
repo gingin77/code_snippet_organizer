@@ -8,15 +8,18 @@
   </head>
   <body>
     <div class="registration">
-      <form action='/register/' method="POST">
-        <!-- <label name='user_id'>User ID</label>
-        <input name='user_id' type='text' /> -->
-        <label name='email'>Email</label>
-        <input name='email' type='email' />
-        <label name='password'>Password</label>
-        <input name='password' type='password' />
-        <button type='submit' name='button'>Submit</button>
-      </form>
+      <fieldset>
+        <form action='/register/' method="POST" id="register_form">
+          <!-- <label name='user_id'>User ID</label>
+          <input name='user_id' type='text' /> -->
+          <label name='email'>Email</label>
+          <input name='email' type='email' />
+          <label name='password'>Password</label>
+          <input name='password' type='password' />
+          <br />
+          <button type='submit' name='register' class="button-info" form="register_form">Register</button>
+        </form>
+      </fieldset>
     </div>
   </body>
 </html>
