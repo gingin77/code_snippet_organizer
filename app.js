@@ -145,6 +145,7 @@ app.post('/new_snippet/', function (req, res){
   Snippet.create(req.body)
   .then(function (snippet) {
     res.redirect('/')
+    console.log(snippet);
   })
   .catch(function (error) {
     let errorMsg
@@ -180,7 +181,6 @@ app.get('/:id/edit', function (req, res) {
 })
 
 app.post('/:id/edit', function (req, res) {
-  // let rb = req.body
   const updatedSnippet = {
     title: req.body.title,
     language: req.body.language,
@@ -190,10 +190,10 @@ app.post('/:id/edit', function (req, res) {
     user: req.body.user
   }
   console.log(updatedSnippet)
-  // Snippet.updateOne({_id: req.params.id}, updatedSnippet, {})
-  // .then(function () {
-  //   res.redirect(`/${req.params.id}`)
-  // })
+  Snippet.updateOne({_id: req.params.id}, updatedSnippet, {})
+  .then(function () {
+    res.redirect(`/${req.params.id}`)
+  })
 })
 
 app.get('/', function (req, res) {
