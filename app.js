@@ -139,8 +139,6 @@ app.get('/new_snippet/', function (req, res){
   res.render('new_snippet')
 })
 
-
-
 app.post('/new_snippet/', function (req, res){
   var snippet = new Snippet()
 
@@ -174,7 +172,7 @@ app.get('/:id', function (req, res) {
 app.get('/:id/edit', function (req, res) {
   Snippet.findOne({_id: req.params.id})
     .then(function (snippet) {
-      console.log(snippet);
+      console.log(snippet)
       res.render('edit_snippet', {snippet: snippet})
     })
 })
@@ -195,13 +193,21 @@ app.post('/:id/edit', function (req, res) {
 })
 
 app.post('/:id/delete', function (req, res) {
-  Snippet.findOneAndRemove({_id: req.params.id}).then(function (book) {
+  Snippet.findOneAndRemove({_id: req.params.id}).then(function (snippet) {
     res.redirect('/')
   })
 })
 
+app.get('/language/:language', function (req, res) {
+  Snippet.find({language: req.params.language})
+  .then(function (snippet) {
+      res.render('find_by_list_template', {snippet: snippet})
+  })
+})
+
 app.get('/', function (req, res) {
-  Snippet.find().then(function (snippet) {
+  Snippet.find()
+  .then(function (snippet) {
     res.render('home', {snippet: snippet})
   })
 })
