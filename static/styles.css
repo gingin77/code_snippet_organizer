@@ -24,6 +24,25 @@ p{
   font-style: italic;
 }
 
+.snippet_collection{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.snippet_highlights{
+  width: 27%;
+}
+
+.header_and_links h1{
+  width: 60%;
+}
+
+.header_and_links button{
+  margin-top: 10px;
+}
+
 .links{
   /*width: 60%;*/
   display: flex;
@@ -31,7 +50,11 @@ p{
   justify-content: space-around;
 }
 
-/*#delete{
-  background-color: red;
-  border: red;
-}*/
+.dropdown_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*width: 50%;*/
