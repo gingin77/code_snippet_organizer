@@ -135,6 +135,23 @@ function normalizeMongooseErrors (errors) {
   })
 }
 
+app.get('/language/:language', function (req, res) {
+  Snippet.find({language: req.params.language})
+  .then(function (snippet) {
+    res.render('find_by_list_template', {
+      language: req.params.language,
+      snippet: snippet})
+  })
+})
+
+app.post('/language/:language', function (req, res) {
+  // let selectedLanguage = req.body.language
+  Snippet.find({language: req.body.language})
+  .then(function (snippet) {
+    res.redirect(`/language/${req.body.language}`)
+  })
+})
+
 app.get('/new_snippet/', function (req, res){
   res.render('new_snippet')
 })
@@ -195,13 +212,6 @@ app.post('/:id/edit', function (req, res) {
 app.post('/:id/delete', function (req, res) {
   Snippet.findOneAndRemove({_id: req.params.id}).then(function (snippet) {
     res.redirect('/')
-  })
-})
-
-app.get('/language/:language', function (req, res) {
-  Snippet.find({language: req.params.language})
-  .then(function (snippet) {
-      res.render('find_by_list_template', {snippet: snippet})
   })
 })
 

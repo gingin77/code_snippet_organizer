@@ -7,11 +7,10 @@
   <link rel="stylesheet" type="text/css" href="/static/styles.css" />
 </head>
 <body>
-  {{#snippet}}
-  <h1 class="text-bold">All available snippets in:  {{language}}</h1>
-  <form action="/language/{{language}}" method="post" id="form_switch_language">
-    <label for="language">Switch to:</label>
-    <select name="language" type="text" id="language" name="language" form="form_switch_language" required>
+    <h1 class="text-bold">All available snippets in:  {{language}}</h1>
+    <form action="/language/{{language}}" method="post" id="form_switch_language">
+      <label for="language">Switch to:</label>
+      <!-- <select name="language" type="text" id="language" form="form_switch_language" required>
       <option value="JavaScript">JavaScript</option>
       <option value="Java">Java</option>
       <option value="Python">Python</option>
@@ -19,25 +18,23 @@
       <option value="PHP">PHP</option>
       <option value="Ruby">Ruby</option>
       <option value="C++">C++</option>
-    </select>
-    <button form="switch_language">submit</button>
-    <br />
-  </form>
-  <div>
-    <br />
-    <h3>{{title}}</h3>
+    </select> -->
+    <input form="form_switch_language" name="language"/>
+    <button type="submit" form="form_switch_language" name="language">submit</button>
+      <br />
+    </form>
+    {{#snippet}}
+    <div>
+      <br />
+      <h3>{{title}}</h3>
       <pre>{{body}}</pre>
       {{#notes}}
-      <blockquote><strong>Notes: </strong>{{notes}}</blockquote>
+        <blockquote><strong>Notes: </strong>{{notes}}</blockquote>
       {{/notes}}
       {{#tags}}
         <h3><a href="/{{.}}">{{.}}</a> </h3>
       {{/tags}}
       <div class="snippet_highlights">
-        <h5><a href="/{{_id}}">{{title}}</a></h5>
-        {{#tags}}
-        <h6><a href="/{{.}}">{{.}}</a> </h6>
-        {{/tags}}
         <form action='/{{_id}}/edit/' method="GET">
           <button class="button-xs button-light">Edit this snippet</button>
         </form>
@@ -46,7 +43,7 @@
         </form>
         </br>
       </div>
-    {{/snippet}}
+  {{/snippet}}
   </div>
   <script src="https://cdn.shoelace.style/1.0.0-beta22/shoelace.js"></script>
 </body>
