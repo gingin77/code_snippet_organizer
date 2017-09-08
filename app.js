@@ -136,6 +136,8 @@ function normalizeMongooseErrors (errors) {
 }
 
 app.get('/language/:language', function (req, res) {
+  console.log(req.params.language)
+  console.log("^^ req.params.language on the app.get");
   Snippet.find({language: req.params.language})
   .then(function (snippet) {
     res.render('find_by_list_template', {
@@ -146,9 +148,18 @@ app.get('/language/:language', function (req, res) {
 
 app.post('/language/:language', function (req, res) {
   // let selectedLanguage = req.body.language
+  console.log(req.body.language)
   Snippet.find({language: req.body.language})
   .then(function (snippet) {
     res.redirect(`/language/${req.body.language}`)
+  })
+})
+app.get('/:language', function (req, res) {
+  Snippet.find({language: req.params.language})
+  .then(function (snippet) {
+    res.render('find_by_list_template', {
+      language: req.params.language,
+      snippet: snippet})
   })
 })
 
