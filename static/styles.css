@@ -35,6 +35,13 @@ p{
   width: 27%;
 }
 
+.header_and_links{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .header_and_links h1{
   width: 60%;
 }

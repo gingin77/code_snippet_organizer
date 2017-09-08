@@ -135,33 +135,7 @@ function normalizeMongooseErrors (errors) {
   })
 }
 
-app.get('/language/:language', function (req, res) {
-  console.log(req.params.language)
-  console.log("^^ req.params.language on the app.get");
-  Snippet.find({language: req.params.language})
-  .then(function (snippet) {
-    res.render('find_by_list_template', {
-      language: req.params.language,
-      snippet: snippet})
-  })
-})
 
-app.post('/language/:language', function (req, res) {
-  // let selectedLanguage = req.body.language
-  console.log(req.body.language)
-  Snippet.find({language: req.body.language})
-  .then(function (snippet) {
-    res.redirect(`/language/${req.body.language}`)
-  })
-})
-app.get('/:language', function (req, res) {
-  Snippet.find({language: req.params.language})
-  .then(function (snippet) {
-    res.render('find_by_list_template', {
-      language: req.params.language,
-      snippet: snippet})
-  })
-})
 
 app.get('/new_snippet/', function (req, res){
   res.render('new_snippet')
@@ -177,10 +151,28 @@ app.post('/new_snippet/', function (req, res){
   snippet.tags = req.body.tags.replace(/\s/g, '').split(",")
   snippet.user = req.body.user
 
-  console.log(snippet)
-
   snippet.save(function(err){
     res.redirect('/')
+  })
+})
+
+app.get('/tag/:tag', function (req, res) {
+  console.log(req.params.tag)
+  console.log("^^ req.params.tag on the app.get");
+  Snippet.find({tags: req.params.tag})
+  .then(function (snippet) {
+    res.render('find_by_tag', {
+      tag: req.params.tag,
+      snippet: snippet})
+  })
+})
+
+app.post('/tag/:tag', function (req, res) {
+  // let selectedLanguage = req.body.language
+  console.log(req.body.tag)
+  Snippet.find({tag: req.body.tag})
+  .then(function (snippet) {
+    res.redirect(`/tag/${req.body.tag}`)
   })
 })
 
@@ -223,6 +215,26 @@ app.post('/:id/edit', function (req, res) {
 app.post('/:id/delete', function (req, res) {
   Snippet.findOneAndRemove({_id: req.params.id}).then(function (snippet) {
     res.redirect('/')
+  })
+})
+
+app.get('/language/:language', function (req, res) {
+  console.log(req.params.language)
+  console.log("^^ req.params.language on the app.get");
+  Snippet.find({language: req.params.language})
+  .then(function (snippet) {
+    res.render('find_by_language', {
+      language: req.params.language,
+      snippet: snippet})
+  })
+})
+
+app.post('/language/:language', function (req, res) {
+  // let selectedLanguage = req.body.language
+  console.log(req.body.language)
+  Snippet.find({language: req.body.language})
+  .then(function (snippet) {
+    res.redirect(`/language/${req.body.language}`)
   })
 })
 
