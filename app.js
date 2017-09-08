@@ -167,14 +167,14 @@ app.get('/tag/:tag', function (req, res) {
   })
 })
 
-app.post('/tag/:tag', function (req, res) {
-  // let selectedLanguage = req.body.language
-  console.log(req.body.tag)
-  Snippet.find({tag: req.body.tag})
-  .then(function (snippet) {
-    res.redirect(`/tag/${req.body.tag}`)
-  })
-})
+// app.post('/tag/:tag', function (req, res) {
+//   // let selectedLanguage = req.body.language
+//   console.log(req.body.tag)
+//   Snippet.find({tag: req.body.tag})
+//   .then(function (snippet) {
+//     res.redirect(`/tag/${req.body.tag}`)
+//   })
+// })
 
 app.get('/:id', function (req, res) {
   // console.log(req.params.id)
